@@ -112,6 +112,7 @@ for i in range(50):  # capture 50 frames
     buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE
     buf.memory = V4L2_MEMORY_MMAP
     xioctl(vd.fileno(), VIDIOC_DQBUF, buf)  # get image from the driver queue
+    print("Frame at ", time.time() - t0)
     #print("buf.index", buf.index)
     mm = buffers[buf.index]
     # print first few pixels in gray scale part of yuvv format packed data

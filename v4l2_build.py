@@ -70,6 +70,7 @@ def generate_cdef():
             for spec in astnode.funcspec:
                 if type(spec) == pycparserext.ext_c_parser.AttributeSpecifier:
                     for att in spec.exprlist.exprs:
+                        print(att.name)
                         if att.name == 'packed':
                             outthis = out_packed
             if type(astnode.type) == pycparser.c_ast.Enum:
@@ -85,7 +86,11 @@ def generate_cdef():
                 # for parsing ioctl(...) decalaration
                 outthis.write(g.visit(astnode)+';\n')
         else:
-            outthis.write(g.visit(astnode)+';\n')
+            if type(astnode) != pycparser.c_ast.FuncDef:
+                outthis.write(g.visit(astnode)+';\n')
+            else:
+                print("skipping FuncDef")
+                print(g.visit(astnode));
         #print('node', i)
         #print(g.generic_visit(astnode)+'\n')
         i+=1
